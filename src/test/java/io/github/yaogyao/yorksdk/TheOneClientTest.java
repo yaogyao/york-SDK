@@ -13,22 +13,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class TheOneClientTest {
-    private static TheOneClient client;
-
-    @BeforeAll
-    static void setup(){
-        client = new TheOneClient();
-    }
+    private static TheOneClient client = new TheOneClient();
 
     @Test
-    void testListMovies(){
+    public void testListMovies(){
         Response<Movie> res = client.getMovies();
         assertTrue(res.getDocs().size() >= 0);
         assertTrue(res.getOffset() == 0);
     }
 
     @Test
-    void testListMoviesWithCustomLimit(){
+    public void testListMoviesWithCustomLimit(){
         int limit = 2;
         assumeTrue(client.getMovies().getDocs().size() >= limit);
         Options options = new Options.Builder().limit(limit).build();
@@ -36,12 +31,12 @@ public class TheOneClientTest {
         assertTrue(res.getDocs().size() == limit);
     }
     @Test
-    void testListMoviesWithInvalidLimit(){
+    public void testListMoviesWithInvalidLimit(){
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> new Options.Builder().limit(-1).build());
         assertEquals(Constants.INVALID_LIMIT, exception.getMessage());
     }
     @Test
-    void testListMoviesWithCustomOffset(){
+    public void testListMoviesWithCustomOffset(){
         Response<Movie> res1 = client.getMovies();
         int offset = 1;
         assumeTrue(res1.getDocs().size() > offset);
@@ -51,12 +46,12 @@ public class TheOneClientTest {
         assertTrue(res1.getDocs().get(offset).getId().equals(res2.getDocs().get(0).getId()));
     }
     @Test
-    void testListMoviesWithInvalidOffset(){
+    public void testListMoviesWithInvalidOffset(){
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> new Options.Builder().offset(-1).build());
         assertEquals(Constants.INVALID_OFFSET, exception.getMessage());
     }
     @Test
-    void testListMoviesWithCustomPage(){
+    public void testListMoviesWithCustomPage(){
         Response<Movie> res1 = client.getMovies();
         int limit = 5, page = 2;
         assumeTrue(res1.getDocs().size() > limit*(page-1));
@@ -67,13 +62,13 @@ public class TheOneClientTest {
     }
 
     @Test
-    void testListMoviesWithInvalidPage(){
+    public void testListMoviesWithInvalidPage(){
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> new Options.Builder().page(0).build());
         assertEquals(Constants.INVALID_PAGE, exception.getMessage());
     }
 
     @Test
-    void testListMoviesWithSort(){
+    public void testListMoviesWithSort(){
         Response<Movie> res1 = client.getMovies();
         assumeTrue(res1.getDocs().size() >= 2);
 
@@ -85,13 +80,13 @@ public class TheOneClientTest {
     }
 
     @Test
-    void testListMoviesWithInvalidSort(){
+    public void testListMoviesWithInvalidSort(){
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> new Options.Builder().sort("").build());
         assertEquals(Constants.INVALID_SORT_NAME, exception.getMessage());
     }
 
     @Test
-    void testListMoviesWithMatchFilter(){
+    public void testListMoviesWithMatchFilter(){
         Response<Movie> res = client.getMovies();
         int total = res.getTotal();
         assumeTrue(total >= 2);
@@ -112,7 +107,7 @@ public class TheOneClientTest {
     }
 
     @Test
-    void testListMoviesWithIncludeFilter(){
+    public void testListMoviesWithIncludeFilter(){
         Response<Movie> res = client.getMovies();
         int total = res.getTotal();
         assumeTrue(total >= 2);
@@ -134,7 +129,7 @@ public class TheOneClientTest {
     }
 
     @Test
-    void testListMoviesWithExistFilter(){
+    public void testListMoviesWithExistFilter(){
         Response<Movie> res = client.getMovies();
         int total = res.getTotal();
 
@@ -153,7 +148,7 @@ public class TheOneClientTest {
     }
 
     @Test
-    void testListMoviesWithRegexFilter(){
+    public void testListMoviesWithRegexFilter(){
         Response<Movie> res = client.getMovies();
         int total = res.getTotal();
 
@@ -171,7 +166,7 @@ public class TheOneClientTest {
     }
 
     @Test
-    void testListMoviesWithComparisonFilter(){
+    public void testListMoviesWithComparisonFilter(){
         Response<Movie> res = client.getMovies();
         int total = res.getTotal();
 
@@ -190,7 +185,7 @@ public class TheOneClientTest {
     }
 
     @Test
-    void testGetMovieById(){
+    public void testGetMovieById(){
         Response<Movie> res = client.getMovies();
         assumeTrue(res.getTotal() > 0);
         Movie m1 = res.getDocs().get(0);
@@ -200,12 +195,12 @@ public class TheOneClientTest {
     }
 
     @Test
-    void testGetMovieByInvalidId(){
+    public void testGetMovieByInvalidId(){
         assertThrows(Exception.class, ()-> client.getMovieById("bad"));
     }
 
     @Test
-    void testGetQuoteByMovieId() {
+    public void testGetQuoteByMovieId() {
         Response<Movie> res = client.getMovies();
         assumeTrue(res.getTotal() > 0);
         Movie m1 = res.getDocs().get(new Random().nextInt(res.getTotal()));
@@ -215,7 +210,7 @@ public class TheOneClientTest {
     }
 
     @Test
-    void testGetQuotes(){
+    public void testGetQuotes(){
         Response<Quote> res = client.getQuotes();
         int total = res.getTotal();
         assertTrue(res.getDocs().size() >= 0);
@@ -245,7 +240,7 @@ public class TheOneClientTest {
     }
 
     @Test
-    void testGetQuoteById(){
+    public void testGetQuoteById(){
         Options options = new Options.Builder().limit(10).build();
         Response<Quote> res = client.getQuotes(options);
         int total = res.getTotal();

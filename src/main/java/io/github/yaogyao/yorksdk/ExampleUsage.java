@@ -3,8 +3,6 @@ package io.github.yaogyao.yorksdk;
 import io.github.yaogyao.yorksdk.model.Quote;
 import io.github.yaogyao.yorksdk.model.Response;
 import io.github.yaogyao.yorksdk.model.Movie;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Example for using TheOneClient
@@ -12,34 +10,35 @@ import org.slf4j.LoggerFactory;
  */
 public class ExampleUsage
 {
-    private static Logger log = LoggerFactory.getLogger(ExampleUsage.class);
-
     public static void main( String[] args )
     {
-        // create the client (set token in ENV variable "THE_ONE_TOKEN")
+        // create the client
+        // requires Authorization token in ENV variable "THE_ONE_TOKEN", or set explicitly in constructor
         TheOneClient client = new TheOneClient();
 
         // list all movies
+        // Reponse<T> contains metadata on the result set, useful for subsequent pagination calls
         Response<Movie> res = client.getMovies();
-        log.info("Found {} movies, default limit: {}", res.getTotal(), res.getLimit());
+        System.out.println("Found " + res.getTotal() + " movies with default limit " + res.getLimit());
 
-        // list movies with pagination, sort
+        // list movies with options
+        // Options contains pagination, sort and filter settings
         Options options = new Options.Builder()
-                .limit(10)
+                .limit(5)
                 .page(2)
                 .sort("runtimeInMinutes", SortOrder.DESC)
                 .build();
         res = client.getMovies(options);
-        log.info("Found movies with pagination and sort");
-        res.getDocs().forEach(movie -> log.info(movie.toString()));
+        System.out.println("Found " + res.getDocs().size() + " movies with page 2 and sorted by 'runtimeInMinutes' in descending order");
+        res.getDocs().forEach(movie -> System.out.println(movie));
 
         // get movie by id
         Movie m = client.getMovieById("5cd95395de30eff6ebccde5d");
-        log.info("Found movie with id={}: {}", m.getId(), m.toString());
+        System.out.println("Found movie with id=" + m.getId() + " - " + m);
 
         // get quotes by movie
         Response<Quote> quoteResponse = client.getQuotesByMovieId(m.getId());
-        log.info("Found {} quotes for movie id={}", quoteResponse.getTotal(), m.getId());
+        System.out.println("Found " + quoteResponse.getTotal() + " quotes for movie id=" + m.getId());
 
         // get quotes
         options = new Options.Builder()
@@ -48,11 +47,11 @@ public class ExampleUsage
                 .filter("dialog=/ring/i")
                 .build();
         quoteResponse = client.getQuotes(options);
-        log.info("Found {} quotes containing 'ring' case insensitive", quoteResponse.getTotal());
+        System.out.println("Found " + quoteResponse.getTotal() + " quotes containing 'ring' case insensitive");
 
         // get quote by id
         Quote quote = client.getQuoteById("5cd96e05de30eff6ebcce810");
-        log.info("Found quote by id={} : {}", quote.getId(), quote.toString());
+        System.out.println("Found quote by id=" + quote.getId() + " - " + quote);
 
     }
 }
