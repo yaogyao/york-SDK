@@ -10,7 +10,7 @@ Required Java 8+
 <dependency>
   <groupId>io.github.yaogyao</groupId>
   <artifactId>york-sdk</artifactId>
-  <version>1.1</version>
+  <version>1.0</version>
 </dependency>
 ```
 
