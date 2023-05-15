@@ -6,7 +6,7 @@
 
   <groupId>io.github.yaogyao</groupId>
   <artifactId>york-sdk</artifactId>
-  <version>1.0</version>
+  <version>1.1</version>
 
   <name>${project.groupId}:${project.artifactId}</name>
   <description>This a Java SDK to access The One API</description>

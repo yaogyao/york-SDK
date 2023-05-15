@@ -2,6 +2,7 @@
 A Java SDK to access The One API: https://the-one-api.dev/
 
 # Installation
+Required Java 8+
 
 ## Maven
 
@@ -9,20 +10,25 @@ A Java SDK to access The One API: https://the-one-api.dev/
 <dependency>
   <groupId>io.github.yaogyao</groupId>
   <artifactId>york-sdk</artifactId>
-  <version>1.0</version>
+  <version>1.1</version>
 </dependency>
-```
-
-## Gradle
-```groovy
-compile group: 'io.github.yaogyao', name: 'york-sdk', version: '1.0'
 ```
 
 # Usage
 
+Available calls:
+- Response<Movie> getMovies()
+- Response<Movie> getMovies(options)
+- Movie getMovieById(movieId)
+- Response<Quote> getQuotesByMovieId(movieId, options)
+- Response<Quote> getQuotes()
+- Response<Quote> getQuotes(options)
+- Quote getQuoteById(quoteId)
+
 ```java
 // create the client
 // requires Authorization token in ENV variable "THE_ONE_TOKEN", or set explicitly in constructor
+// sign up to get token: https://the-one-api.dev/sign-up
 TheOneClient client = new TheOneClient();
 
 // list all movies

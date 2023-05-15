@@ -11,6 +11,12 @@ import feign.slf4j.Slf4jLogger;
 
 import java.util.Map;
 
+/**
+ * A client class to access The One API.
+ * It uses Feign library to handle lower level http request/response.
+ * @see Options
+ * @see ExampleUsage
+ */
 public class TheOneClient {
 
     @Headers("Authorization: Bearer {token}")
@@ -41,49 +47,95 @@ public class TheOneClient {
 
     private String token;
 
+    /**
+     * Default constructor, read api token from environment variable
+     */
     public TheOneClient() {
         this(System.getenv(Constants.THE_ONE_TOKEN));
     }
 
+    /**
+     * Constructor to set token explicitly
+     * @param token the token provided by The One API when sign up
+     */
     public TheOneClient(String token) {
         this.token = token;
         if (token == null || token.isEmpty()) throw new TheOneClientException(Constants.TOKEN_REQUIRED, null);
     }
 
 
+    /**
+     * List all movies
+     * @return Response contains pagination metadata and a list of movies
+     */
     public Response<Movie> getMovies() {
         return getMovies(new Options.Builder().build());
     }
 
+    /**
+     * List all movies with custom pagination, sort and filter settings
+     * @param options settings for pagination, sort and filter
+     * @return Response contains pagination metadata and a list of movies
+     */
     public Response<Movie> getMovies(Options options) {
         Response<Movie> res = feignClient.movies(token, options.getQueryMap(), options.getFilter());
         return res;
     }
 
+    /**
+     * Get a movie by id
+     * @param movieId unique movie id
+     * @return a single Movie matching the specified id
+     */
     public Movie getMovieById(String movieId) {
         Response<Movie> res = feignClient.movie(token, movieId);
         if (res.getTotal() == 0) throw new TheOneClientException(Constants.NOT_FOUND, null);
         return res.getDocs().get(0);
     }
 
+    /**
+     * Get quotes in the specified movie
+     * @param movieId unique movie id
+     * @return Response contains pagination metadata and a list of quotes
+     */
     public Response<Quote> getQuotesByMovieId(String movieId) {
         return getQuotesByMovieId(movieId, new Options.Builder().build());
     }
 
+    /**
+     * Get quotes in the specified movie with custom pagination, sort and filter settings
+     * @param movieId unique movie id
+     * @param options settings for pagination, sort and filter
+     * @return Response contains pagination metadata and a list of quotes
+     */
     public Response<Quote> getQuotesByMovieId(String movieId, Options options) {
         Response<Quote> res = feignClient.quotesByMovie(token, movieId, options.getQueryMap(), options.getFilter());
         return res;
     }
 
+    /**
+     * Get all quotes
+     * @return Response contains pagination metadata and a list of quotes
+     */
     public Response<Quote> getQuotes() {
         return getQuotes(new Options.Builder().build());
     }
 
+    /**
+     * Get all quotes with custom pagination, sort and filter settings
+     * @param options settings for pagination, sort and filter
+     * @return Response contains pagination metadata and a list of quotes
+     */
     public Response<Quote> getQuotes(Options options) {
         Response<Quote> res = feignClient.quotes(token, options.getQueryMap(), options.getFilter());
         return res;
     }
 
+    /**
+     * Get a quote by quote id
+     * @param quoteId unique quote id
+     * @return A single quote matching the specified id
+     */
     public Quote getQuoteById(String quoteId) {
         Response<Quote> res = feignClient.quote(token, quoteId);
         if (res.getTotal() == 0) throw new TheOneClientException(Constants.NOT_FOUND, null);

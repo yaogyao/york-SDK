@@ -52,6 +52,5 @@ public class ExampleUsage
         // get quote by id
         Quote quote = client.getQuoteById("5cd96e05de30eff6ebcce810");
         System.out.println("Found quote by id=" + quote.getId() + " - " + quote);
-
     }
 }
