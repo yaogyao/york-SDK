@@ -1,4 +1,4 @@
-package com.lor;
+package io.github.yaogyao.yorksdk;
 
 import java.util.HashMap;
 import java.util.Map;

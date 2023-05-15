@@ -1,4 +1,4 @@
-package com.lor.model;
+package io.github.yaogyao.yorksdk.model;
 
 import java.util.Objects;
 

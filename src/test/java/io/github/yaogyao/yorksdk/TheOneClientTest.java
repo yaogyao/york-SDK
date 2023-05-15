@@ -1,9 +1,9 @@
-package com.lor;
+package io.github.yaogyao.yorksdk;
 
 
-import com.lor.model.Movie;
-import com.lor.model.Quote;
-import com.lor.model.Response;
+import io.github.yaogyao.yorksdk.model.Movie;
+import io.github.yaogyao.yorksdk.model.Quote;
+import io.github.yaogyao.yorksdk.model.Response;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

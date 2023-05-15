@@ -1,4 +1,4 @@
-package com.lor.model;
+package io.github.yaogyao.yorksdk.model;
 
 import com.google.gson.annotations.SerializedName;
 

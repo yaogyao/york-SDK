@@ -1,8 +1,8 @@
-package com.lor;
+package io.github.yaogyao.yorksdk;
 
-import com.lor.model.Movie;
-import com.lor.model.Quote;
-import com.lor.model.Response;
+import io.github.yaogyao.yorksdk.model.Movie;
+import io.github.yaogyao.yorksdk.model.Quote;
+import io.github.yaogyao.yorksdk.model.Response;
 import feign.*;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;

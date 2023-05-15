@@ -1,8 +1,8 @@
-package com.lor;
+package io.github.yaogyao.yorksdk;
 
-import com.lor.model.Quote;
-import com.lor.model.Response;
-import com.lor.model.Movie;
+import io.github.yaogyao.yorksdk.model.Quote;
+import io.github.yaogyao.yorksdk.model.Response;
+import io.github.yaogyao.yorksdk.model.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

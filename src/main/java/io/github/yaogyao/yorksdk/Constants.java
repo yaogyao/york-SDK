@@ -1,4 +1,4 @@
-package com.lor;
+package io.github.yaogyao.yorksdk;
 
 public class Constants {
     public static String THE_ONE_TOKEN = "THE_ONE_TOKEN";
